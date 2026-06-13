@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>奇幻數學主題樂園 - 小學二年級專屬數學冒險</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- 自訂動畫與樣式 -->
+  <style>
+    @keyframes bounce-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-bounce-slow {
+      animation: bounce-slow 3s infinite ease-in-out;
+    }
+    .animate-spin-slow {
+      animation: spin-slow 15s infinite linear;
+    }
+    .animate-pulse-slow {
+      animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    .animate-scale-up {
+      animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes scaleUp {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-blue-100 via-pink-100 to-yellow-100 font-sans text-slate-800 flex flex-col relative overflow-x-hidden selection:bg-pink-300">
+
+  <!-- 漂浮裝飾雲朵 -->
+  <div class="absolute top-10 left-10 w-28 h-12 bg-white rounded-full opacity-70 blur-xs animate-bounce pointer-events-none" style="animation-duration: 6s;"></div>
+  <div class="absolute top-24 right-16 w-36 h-14 bg-white rounded-full opacity-60 blur-xs animate-bounce pointer-events-none" style="animation-duration: 8s;"></div>
+  <div class="absolute -top-16 left-1/2 transform -translate-x-1/2 w-96 h-48 border-[12px] border-pink-300/30 rounded-full pointer-events-none"></div>
+
+  <!-- 頂部導航欄 -->
+  <header class="bg-white/80 backdrop-blur-md shadow-md py-4 px-6 flex justify-between items-center z-30 sticky top-0 border-b border-pink-200">
+    <div class="flex items-center gap-2 cursor-pointer group" onclick="goToScreen('welcome')">
+      <div class="bg-gradient-to-r from-pink-400 to-yellow-400 p-2.5 rounded-2xl text-white shadow-md transform group-hover:rotate-12 transition-transform">
+        <i data-lucide="sparkles" class="w-6 h-6 animate-pulse"></i>
+      </div>
+      <div>
+        <h1 class="text-xl md:text-2xl font-black bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-500 bg-clip-text text-transparent">
+          奇幻數學主題樂園
+        </h1>
+        <p class="text-xs font-bold text-slate-500 hidden md:block">小學二年級專屬數學冒險</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <!-- 金幣顯示 -->
+      <div class="flex items-center gap-2 bg-yellow-100 border-2 border-yellow-400 px-3.5 py-1.5 rounded-full shadow-inner animate-pulse">
+        <i data-lucide="coins" class="w-5 h-5 text-yellow-500 fill-yellow-400"></i>
+        <span class="font-extrabold text-yellow-700 tracking-wider">
+          <span id="coin-display">100</span> <span class="text-xs font-bold">金幣</span>
+        </span>
+      </div>
+
+      <!-- 靜音開關 -->
+      <button onclick="toggleSound()" id="sound-btn" class="p-2.5 bg-slate-100 hover:bg-pink-100 rounded-full text-slate-600 hover:text-pink-600 transition-all border border-slate-200" title="切換音效">
+        <i data-lucide="volume-2" class="w-5 h-5"></i>
+      </button>
+
+      <!-- 導航捷徑 -->
+      <button onclick="goToScreen('map')" id="nav-map-btn" class="hidden flex items-center gap-1.5 bg-indigo-500 hover:bg-indigo-600 text-white font-extrabold px-4 py-2 rounded-2xl shadow-md transition-all text-sm">
+        <i data-lucide="compass" class="w-4 h-4"></i> 地圖
+      </button>
+
+      <button onclick="goToScreen('shop')" id="nav-shop-btn" class="flex items-center gap-1.5 bg-pink-500 hover:bg-pink-600 text-white font-extrabold px-4 py-2 rounded-2xl shadow-md transition-all text-sm">
+        <i data-lucide="shopping-bag" class="w-4 h-4"></i> 禮品店
+      </button>
+    </div>
+  </header>
+
+  <!-- 主要內容區域 -->
+  <main class="flex-1 flex flex-col items-center justify-center p-4 z-20 relative max-w-6xl w-full mx-auto">
+    
+    <!-- ==================== WELCOME SCREEN ==================== -->
+    <div id="screen-welcome" class="screen-view text-center py-8 px-4 max-w-2xl bg-white/90 rounded-3xl shadow-2xl border-4 border-pink-300 animate-scale-up relative">
+      <div class="absolute -top-5 -left-5 text-4xl animate-bounce">🎈</div>
+      <div class="absolute -bottom-5 -right-5 text-4xl animate-bounce" style="animation-delay: 1s;">🍿</div>
+
+      <div class="flex justify-center mb-6">
+        <svg viewBox="0 0 200 200" class="w-48 h-48 animate-pulse">
+          <circle cx="100" cy="100" r="80" fill="#fbcfe8" />
+          <path d="M50 140 L150 140 L100 60 Z" fill="#f87171" />
+          <rect x="75" y="100" width="50" height="40" fill="#60a5fa" />
+          <polygon points="100,20 120,50 80,50" fill="#facc15" />
+          <circle cx="100" cy="120" r="10" fill="#fbbf24" />
+          <path d="M40 50 L45 60 L55 60 L47 67 L50 77 L40 70 L30 77 L33 67 L25 60 L35 60 Z" fill="#fbbf24" />
+          <path d="M150 40 L153 48 L162 48 L155 54 L157 62 L150 57 L143 62 L145 54 L138 48 L147 48 Z" fill="#a78bfa" />
+        </svg>
+      </div>
+
+      <h2 class="text-3xl md:text-5xl font-black text-indigo-700 tracking-tight mb-4 leading-tight">
+        歡迎來到 <br />
+        <span class="bg-gradient-to-r from-pink-500 via-yellow-500 to-indigo-600 bg-clip-text text-transparent">
+          奇幻數學主題樂園！
+        </span>
+      </h2>
+
+      <p class="text-base md:text-lg font-bold text-slate-600 mb-8 leading-relaxed">
+        在這裡，你可以坐上 <span class="text-pink-500">過山車</span> 玩轉四位數，<br>
+        搭上 <span className="text-blue-500">旋轉木馬</span> 計算加減，
+        到 <span class="text-purple-500">摩天輪</span> 測量長度，<br>
+        最後在 <span class="text-yellow-600">紀念品店</span> 瘋狂購物！<br>
+        每個設施都有 **10 個好玩關卡**，快來賺取金幣，打造你的專屬夢幻樂園吧！🎉
+      </p>
+
+      <button onclick="goToScreen('map')" class="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-pink-500 via-yellow-500 to-indigo-600 text-white font-black text-xl px-12 py-5 rounded-full shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1 active:translate-y-0">
+        進入樂園 
+        <i data-lucide="arrow-right" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- ==================== MAP SCREEN ==================== -->
+    <div id="screen-map" class="screen-view hidden w-full flex flex-col gap-6 animate-scale-up">
+      <!-- 夢幻樂園實景展示 -->
+      <div class="bg-gradient-to-r from-indigo-900 via-purple-900 to-indigo-950 p-6 rounded-3xl shadow-xl border-4 border-yellow-400 text-white relative min-h-[220px] overflow-hidden flex flex-col justify-between">
+        <div class="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+          <i data-lucide="sparkles" class="w-48 h-48 text-yellow-300"></i>
+        </div>
+        
+        <div>
+          <span class="bg-yellow-400 text-slate-900 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow">
+            我的夢幻樂園實景
+          </span>
+          <h3 class="text-xl md:text-2xl font-black mt-2 text-yellow-200">
+            收集金幣，添置遊樂設施！🎡
+          </h3>
+        </div>
+
+        <!-- 動態解鎖裝飾區域 -->
+        <div id="decorations-playground" class="flex flex-wrap gap-6 items-center justify-center py-4 z-10">
+          <!-- JS 動態插入裝飾 -->
+        </div>
+
+        <div class="text-right text-xs font-bold text-yellow-300/80" id="decorations-count">
+          當前解鎖組件: 1 / 6
+        </div>
+      </div>
+
+      <!-- 遊樂設施選擇網格 -->
+      <div>
+        <h3 class="text-2xl font-black text-indigo-900 mb-4 flex items-center gap-2">
+          🗺️ 選擇你想挑戰的遊樂設施（每關均設10題）：
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Game 1: 4 Digits -->
+          <div class="bg-white rounded-3xl p-6 shadow-lg border-b-8 border-pink-500 hover:shadow-2xl transition-all transform hover:-translate-y-1 flex flex-col justify-between">
+            <div>
+              <div class="text-5xl mb-4">🎢</div>
+              <h4 class="text-xl font-black text-pink-600">四位數過山車</h4>
+              <p class="text-slate-600 text-sm font-bold mt-2 leading-relaxed">
+                認識千位、排出最大或最小單雙數。比拼四位數大小！
+              </p>
+            </div>
+            <button onclick="goToScreen('game1')" class="mt-6 w-full py-3 bg-pink-500 hover:bg-pink-600 text-white font-black rounded-2xl shadow transition-colors text-sm">
+              出發排數 🚀 (10關)
+            </button>
+          </div>
+
+          <!-- Game 2: 3 Digits Add/Sub -->
+          <div class="bg-white rounded-3xl p-6 shadow-lg border-b-8 border-blue-500 hover:shadow-2xl transition-all transform hover:-translate-y-1 flex flex-col justify-between">
+            <div>
+              <div class="text-5xl mb-4">🎠</div>
+              <h4 class="text-xl font-black text-blue-600">三位數旋轉木馬</h4>
+              <p class="text-slate-600 text-sm font-bold mt-2 leading-relaxed">
+                三位數加減混合運算、連減、以及好玩的主題樂園情境應用題！
+              </p>
+            </div>
+            <button onclick="goToScreen('game2')" class="mt-6 w-full py-3 bg-blue-500 hover:bg-blue-600 text-white font-black rounded-2xl shadow transition-colors text-sm">
+              開始計算 🧮 (10關)
+            </button>
+          </div>
+
+          <!-- Game 3: Length & Distance -->
+          <div class="bg-white rounded-3xl p-6 shadow-lg border-b-8 border-purple-500 hover:shadow-2xl transition-all transform hover:-translate-y-1 flex flex-col justify-between">
+            <div>
+              <div class="text-5xl mb-4">🎡</div>
+              <h4 class="text-xl font-black text-purple-600">長度摩天輪</h4>
+              <p class="text-slate-600 text-sm font-bold mt-2 leading-relaxed">
+                認識米（m）和厘米（cm），學習用永備尺（步、手跨）估算距離！
+              </p>
+            </div>
+            <button onclick="goToScreen('game3')" class="mt-6 w-full py-3 bg-purple-500 hover:bg-purple-600 text-white font-black rounded-2xl shadow transition-colors text-sm">
+              量度高低 📐 (10關)
+            </button>
+          </div>
+
+          <!-- Game 4: Currency -->
+          <div class="bg-white rounded-3xl p-6 shadow-lg border-b-8 border-yellow-500 hover:shadow-2xl transition-all transform hover:-translate-y-1 flex flex-col justify-between">
+            <div>
+              <div class="text-5xl mb-4">🍿</div>
+              <h4 class="text-xl font-black text-yellow-600">港幣大冒險</h4>
+              <p class="text-slate-600 text-sm font-bold mt-2 leading-relaxed">
+                香港輔幣與紙幣應用、互換、價錢標籤找續及精明購物計算。
+              </p>
+            </div>
+            <button onclick="goToScreen('game4')" class="mt-6 w-full py-3 bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-black rounded-2xl shadow transition-colors text-sm">
+              開心購物 🪙 (10關)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== GAME 1: FOUR DIGITS ==================== -->
+    <div id="screen-game1" class="screen-view hidden w-full bg-white rounded-3xl p-6 shadow-xl border-4 border-pink-400 animate-scale-up max-w-3xl">
+      <div class="flex justify-between items-center mb-6">
+        <span class="bg-pink-100 text-pink-700 font-extrabold px-4 py-1.5 rounded-full text-sm">
+          🎢 第一關：四位數過山車 (關卡 <span id="game1-level">1</span>/10)
+        </span>
+        <div class="flex gap-1" id="game1-level-dots">
+          <!-- Dots will be generated here -->
+        </div>
+      </div>
+
+      <div class="bg-pink-50 rounded-2xl p-4 mb-6 border border-pink-100">
+        <p class="font-extrabold text-slate-700 md:text-lg" id="game1-prompt">
+          💡 任務：載入中...
+        </p>
+      </div>
+
+      <!-- 排列數卡區域 -->
+      <div id="game1-makenumber-area" class="hidden flex flex-col items-center gap-8 py-4">
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center">
+            <div onclick="removeDigit(0)" id="place-0" class="w-16 h-20 md:w-20 md:h-24 bg-gradient-to-b from-slate-50 to-slate-100 border-4 border-dashed border-pink-300 rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-black text-slate-800 shadow-inner cursor-pointer hover:border-pink-500 transition-colors"></div>
+            <span class="text-xs font-black text-slate-500 mt-2 bg-slate-100 px-2.5 py-0.5 rounded-full">千位</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div onclick="removeDigit(1)" id="place-1" class="w-16 h-20 md:w-20 md:h-24 bg-gradient-to-b from-slate-50 to-slate-100 border-4 border-dashed border-pink-300 rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-black text-slate-800 shadow-inner cursor-pointer hover:border-pink-500 transition-colors"></div>
+            <span class="text-xs font-black text-slate-500 mt-2 bg-slate-100 px-2.5 py-0.5 rounded-full">百位</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div onclick="removeDigit(2)" id="place-2" class="w-16 h-20 md:w-20 md:h-24 bg-gradient-to-b from-slate-50 to-slate-100 border-4 border-dashed border-pink-300 rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-black text-slate-800 shadow-inner cursor-pointer hover:border-pink-500 transition-colors"></div>
+            <span class="text-xs font-black text-slate-500 mt-2 bg-slate-100 px-2.5 py-0.5 rounded-full">十位</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div onclick="removeDigit(3)" id="place-3" class="w-16 h-20 md:w-20 md:h-24 bg-gradient-to-b from-slate-50 to-slate-100 border-4 border-dashed border-pink-300 rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-black text-slate-800 shadow-inner cursor-pointer hover:border-pink-500 transition-colors"></div>
+            <span class="text-xs font-black text-slate-500 mt-2 bg-slate-100 px-2.5 py-0.5 rounded-full">個位</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-center text-xs font-bold text-slate-400 mb-2">點擊卡片放上軌道：</p>
+          <div id="game1-digits-pool" class="flex gap-3">
+            <!-- Digits are dynamically inserted here -->
+          </div>
+        </div>
+
+        <div class="w-full flex justify-center gap-4">
+          <button onclick="resetDigits()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-extrabold rounded-xl text-sm flex items-center gap-1">
+            <i data-lucide="undo" class="w-4 h-4"></i> 重置
+          </button>
+          <button onclick="checkGame1Answer()" class="px-8 py-3 bg-pink-500 hover:bg-pink-600 text-white font-black rounded-xl shadow-lg transform hover:scale-105 transition-all">
+            提交答案 ✔️
+          </button>
+        </div>
+      </div>
+
+      <!-- 數列規律區域 -->
+      <div id="game1-sequence-area" class="hidden flex flex-col items-center gap-8 py-4">
+        <div id="game1-sequence-slots" class="flex flex-wrap justify-center gap-3">
+          <!-- Sequence items injected here -->
+        </div>
+
+        <div id="game1-sequence-options" class="grid grid-cols-2 gap-4 max-w-sm w-full">
+          <!-- Options injected here -->
+        </div>
+      </div>
+
+      <!-- 大小排列選擇區域 -->
+      <div id="game1-ordering-area" class="hidden flex flex-col items-center gap-6 py-4">
+        <div id="game1-ordering-numbers" class="flex gap-4">
+          <!-- Displayed order numbers -->
+        </div>
+
+        <div class="flex flex-col gap-3 w-full max-w-md">
+          <button onclick="checkGame1Order(true)" class="py-4 px-6 bg-white hover:bg-pink-50 border-2 border-slate-200 hover:border-pink-300 rounded-2xl font-black text-left flex justify-between items-center transition-all text-sm md:text-base">
+            <span id="game1-order-opt1">✅ 6207 ＞ 6072 ＞ 6027</span>
+            <span class="text-emerald-500 font-black">由大至小</span>
+          </button>
+          <button onclick="checkGame1Order(false)" class="py-4 px-6 bg-white hover:bg-pink-50 border-2 border-slate-200 hover:border-pink-300 rounded-2xl font-black text-left flex justify-between items-center transition-all text-sm md:text-base">
+            <span id="game1-order-opt2">❌ 6027 ＞ 6072 ＞ 6207</span>
+            <span class="text-red-500 font-black">順序顛倒</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 四位數單擇題區域 -->
+      <div id="game1-mc-area" class="hidden grid grid-cols-2 gap-4 max-w-md mx-auto py-4">
+        <!-- MC options dynamically filled here -->
+      </div>
+
+      <!-- 回饋橫幅 -->
+      <div id="game1-feedback" class="hidden mt-6 p-4 rounded-2xl text-center font-extrabold">
+        <p id="game1-feedback-text"></p>
+        <button onclick="nextGame1Level()" id="game1-next-btn" class="mt-3 px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl shadow transition-colors text-sm">
+          下一關過山車 🎢
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== GAME 2: THREE DIGITS ==================== -->
+    <div id="screen-game2" class="screen-view hidden w-full bg-white rounded-3xl p-6 shadow-xl border-4 border-blue-400 animate-scale-up max-w-3xl">
+      <div class="flex justify-between items-center mb-6">
+        <span class="bg-blue-100 text-blue-700 font-extrabold px-4 py-1.5 rounded-full text-sm">
+          🎠 第二關：三位數旋轉木馬 (關卡 <span id="game2-level">1</span>/10)
+        </span>
+        <div class="flex gap-1" id="game2-level-dots">
+          <!-- Dynamic Dots -->
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 p-6 rounded-2xl mb-6 relative">
+        <div class="absolute right-4 bottom-2 text-6xl opacity-20 pointer-events-none">🎠</div>
+        <p class="font-extrabold text-slate-800 leading-relaxed text-base md:text-lg" id="game2-story">
+          🎠 載入題目中...
+        </p>
+      </div>
+
+      <div id="game2-formula-tip" class="hidden text-center py-2 mb-4 animate-fade-in">
+        <span class="text-xs font-black text-rose-600 border border-rose-200 bg-rose-50 px-4 py-2 rounded-full uppercase shadow-xs" id="game2-tip-text">
+          💡 溫馨提示
+        </span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 max-w-md mx-auto" id="game2-options">
+        <!-- Dynamic MC buttons -->
+      </div>
+
+      <!-- 回饋橫幅 -->
+      <div id="game2-feedback" class="hidden mt-6 p-4 rounded-2xl text-center font-extrabold">
+        <p id="game2-feedback-text"></p>
+        <button onclick="nextGame2Level()" id="game2-next-btn" class="mt-3 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-xl shadow transition-colors text-sm">
+          下一關旋轉木馬 🎠
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== GAME 3: LENGTH ==================== -->
+    <div id="screen-game3" class="screen-view hidden w-full bg-white rounded-3xl p-6 shadow-xl border-4 border-purple-400 animate-scale-up max-w-3xl">
+      <div class="flex justify-between items-center mb-6">
+        <span class="bg-purple-100 text-purple-700 font-extrabold px-4 py-1.5 rounded-full text-sm">
+          🎡 第三關：長度摩天輪 (關卡 <span id="game3-level">1</span>/10)
+        </span>
+        <div class="flex gap-1" id="game3-level-dots">
+          <!-- Dynamic Dots -->
+        </div>
+      </div>
+
+      <div class="bg-purple-50 border border-purple-100 p-6 rounded-2xl mb-6 relative">
+        <div class="absolute right-4 bottom-2 text-6xl opacity-10 pointer-events-none">📏</div>
+        <p class="font-extrabold text-slate-800 leading-relaxed text-base md:text-lg" id="game3-story">
+          載入題目中...
+        </p>
+      </div>
+
+      <div class="flex justify-center mb-6" id="game3-illustration">
+        <!-- Dynamic emoji graphic -->
+      </div>
+
+      <div class="flex flex-wrap gap-4 justify-center max-w-md mx-auto" id="game3-options">
+        <!-- Dynamic choice buttons -->
+      </div>
+
+      <!-- 回饋橫幅 -->
+      <div id="game3-feedback" class="hidden mt-6 p-4 rounded-2xl text-center font-extrabold">
+        <p id="game3-feedback-text"></p>
+        <button onclick="nextGame3Level()" id="game3-next-btn" class="mt-3 px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white font-black rounded-xl shadow transition-colors text-sm">
+          下一關摩天輪 🎡
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== GAME 4: CURRENCY ==================== -->
+    <div id="screen-game4" class="screen-view hidden w-full bg-white rounded-3xl p-6 shadow-xl border-4 border-yellow-400 animate-scale-up max-w-3xl">
+      <div class="flex justify-between items-center mb-6">
+        <span class="bg-yellow-100 text-yellow-800 font-extrabold px-4 py-1.5 rounded-full text-sm">
+          🍿 第四關：港幣大冒險 (關卡 <span id="game4-level">1</span>/10)
+        </span>
+        <div class="flex gap-1" id="game4-level-dots">
+          <!-- Dynamic Dots -->
+        </div>
+      </div>
+
+      <!-- 支付類型關卡 -->
+      <div id="game4-pay-area" class="hidden flex flex-col md:flex-row gap-6">
+        <!-- 商品展示區 -->
+        <div class="flex-1 bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-dashed border-amber-200 p-6 rounded-3xl flex flex-col items-center justify-center text-center">
+          <span class="text-8xl mb-4 animate-bounce-slow" id="game4-pay-emoji">🦒</span>
+          <h4 class="text-xl font-black text-slate-800" id="game4-pay-name">可愛長頸鹿氣球 🦒</h4>
+          <div class="mt-3 bg-yellow-400 text-slate-900 font-extrabold px-6 py-2 rounded-2xl text-2xl tracking-wide shadow-md">
+            售價: $<span id="game4-pay-price">15.50</span> 元
+          </div>
+          <p class="text-xs font-bold text-slate-400 mt-3">※ 請在右側選擇紙幣 or 硬幣付款</p>
+        </div>
+
+        <!-- 付款控制區 -->
+        <div class="flex-1 flex flex-col gap-4">
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+            <span class="text-xs font-black text-slate-400 block mb-2">已放入收銀機：</span>
+            <div id="game4-paid-coins" class="flex flex-wrap gap-2 min-h-[48px]">
+              <!-- Dynamic paid items -->
+            </div>
+            <div class="mt-3 pt-3 border-t border-slate-200 flex justify-between items-center">
+              <span class="text-sm font-extrabold text-slate-500">當前已付：</span>
+              <span class="text-xl font-black text-yellow-600">$<span id="game4-total-paid">0.00</span> 元</span>
+            </div>
+          </div>
+
+          <!-- 港幣鍵盤 -->
+          <div>
+            <p class="text-xs font-bold text-slate-400 mb-2">點擊以下港幣付款：</p>
+            <div class="grid grid-cols-3 gap-2 mb-3">
+              <button onclick="payHKD(10)" class="bg-gradient-to-r from-teal-400 to-emerald-500 text-white font-extrabold text-xs py-2 px-3 rounded-lg shadow-sm border border-emerald-600 active:scale-95 transition-transform">$10 綠紙</button>
+              <button onclick="payHKD(20)" class="bg-gradient-to-r from-blue-400 to-indigo-500 text-white font-extrabold text-xs py-2 px-3 rounded-lg shadow-sm border border-indigo-600 active:scale-95 transition-transform">$20 藍紙</button>
+              <button onclick="payHKD(50)" class="bg-gradient-to-r from-emerald-400 to-green-500 text-white font-extrabold text-xs py-2 px-3 rounded-lg shadow-sm border border-green-600 active:scale-95 transition-transform">$50 綠紙</button>
+            </div>
+
+            <div class="flex gap-2 flex-wrap justify-center">
+              <button onclick="payHKD(5)" class="w-10 h-10 bg-slate-100 hover:bg-slate-200 border-4 border-slate-400 text-slate-700 font-black rounded-full flex items-center justify-center text-xs shadow-sm">$5</button>
+              <button onclick="payHKD(2)" class="w-10 h-10 bg-slate-100 hover:bg-slate-200 border-4 border-dashed border-slate-400 text-slate-700 font-black rounded-full flex items-center justify-center text-xs shadow-sm">$2</button>
+              <button onclick="payHKD(1)" class="w-10 h-10 bg-yellow-50 hover:bg-yellow-100 border-4 border-yellow-500 text-yellow-700 font-black rounded-full flex items-center justify-center text-xs shadow-sm">$1</button>
+              <button onclick="payHKD(0.5)" class="w-10 h-10 bg-amber-50 hover:bg-amber-100 border-4 border-amber-500 text-amber-700 font-black rounded-full flex items-center justify-center text-[10px] shadow-sm">5角</button>
+              <button onclick="payHKD(0.1)" class="w-8 h-8 bg-amber-100 hover:bg-amber-200 border-2 border-amber-600 text-amber-800 font-black rounded-full flex items-center justify-center text-[9px] shadow-sm">1角</button>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <button onclick="resetHKDPayment()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-extrabold rounded-xl text-sm">重置付款</button>
+            <button onclick="verifyHKDPayment()" id="game4-pay-submit-btn" class="flex-2 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-black rounded-xl text-sm shadow-md" disabled>確認付款 🪙</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 互換紙幣關卡 -->
+      <div id="game4-swap-area" class="hidden flex flex-col items-center gap-6 py-6">
+        <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-2xl w-full text-center">
+          <p id="game4-swap-prompt" class="font-extrabold text-slate-800 text-base md:text-lg animate-fade-in">
+            🔄 貨幣互換...
+          </p>
+        </div>
+
+        <div id="game4-swap-options" class="grid grid-cols-2 gap-4 w-full max-w-md">
+          <!-- Dynamic buttons for swapping -->
+        </div>
+      </div>
+
+      <!-- 回饋橫幅 -->
+      <div id="game4-feedback" class="hidden mt-6 p-4 rounded-2xl text-center font-extrabold">
+        <p id="game4-feedback-text"></p>
+        <button onclick="nextGame4Level()" id="game4-next-btn" class="mt-3 px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-slate-950 font-black rounded-xl shadow transition-colors text-sm">
+          下一關大冒險 🍿
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== GIFT SHOP SCREEN ==================== -->
+    <div id="screen-shop" class="screen-view hidden w-full bg-white rounded-3xl p-6 shadow-xl border-4 border-pink-400 animate-scale-up max-w-4xl">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h3 class="text-2xl font-black text-pink-600 flex items-center gap-1.5">
+            🎁 樂園紀念禮品店
+          </h3>
+          <p class="text-xs font-bold text-slate-400">用你答題贏得的金幣，把精美的遊樂組件帶回家吧！</p>
+        </div>
+        <button onclick="goToScreen('map')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-extrabold rounded-2xl text-xs">
+          返回樂園地圖
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="shop-items-container">
+        <!-- Shop items are injected here via JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 頁腳 -->
+  <footer class="py-4 text-center text-xs font-bold text-slate-500 bg-white/40 backdrop-blur-xs border-t border-pink-100 z-10">
+    👨‍💻 奇幻數學主題樂園 &middot; 互動學習大冒險
+  </footer>
+
+  <script>
+    // ==================== GLOBAL APP STATE ====================
+    let state = {
+      screen: 'welcome',
+      coins: 100,
+      soundEnabled: true,
+      decorations: ['castle'] // default unlocked item
+    };
+
+    // ==================== SOUND SYNTHESIZER ====================
+    const playSound = (type) => {
+      if (!state.soundEnabled) return;
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        
+        if (type === 'correct') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+          gain.gain.setValueAtTime(0.1, ctx.currentTime);
+          osc.start();
+          osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); // E5
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+          osc.stop(ctx.currentTime + 0.3);
+        } else if (type === 'wrong') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.frequency.setValueAtTime(150, ctx.currentTime);
+          gain.gain.setValueAtTime(0.1, ctx.currentTime);
+          osc.start();
+          osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.3);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+          osc.stop(ctx.currentTime + 0.3);
+        } else if (type === 'click') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.frequency.setValueAtTime(400, ctx.currentTime);
+          gain.gain.setValueAtTime(0.05, ctx.currentTime);
+          osc.start();
+          osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+          osc.stop(ctx.currentTime + 0.15);
+        } else if (type === 'success') {
+          const notes = [261.63, 329.63, 392.00, 523.25];
+          notes.forEach((freq, index) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + index * 0.1);
+            gain.gain.setValueAtTime(0.1, ctx.currentTime + index * 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + index * 0.1 + 0.2);
+            osc.start(ctx.currentTime + index * 0.1);
+            osc.stop(ctx.currentTime + index * 0.1 + 0.2);
+          });
+        }
+      } catch (e) {
+        console.log("Audio not supported yet.");
+      }
+    };
+
+    function toggleSound() {
+      state.soundEnabled = !state.soundEnabled;
+      const btn = document.getElementById('sound-btn');
+      if (state.soundEnabled) {
+        btn.innerHTML = '<i data-lucide="volume-2" class="w-5 h-5"></i>';
+        playSound('click');
+      } else {
+        btn.innerHTML = '<i data-lucide="volume-x" class="w-5 h-5"></i>';
+      }
+      lucide.createIcons();
+    }
+
+    // ==================== SCREEN ROUTING ====================
+    function goToScreen(screenName) {
+      if (screenName === 'map' && state.screen === 'welcome') {
+        playSound('success');
+      } else {
+        playSound('click');
+      }
+
+      state.screen = screenName;
+      
+      // Toggle CSS screen visibility
+      document.querySelectorAll('.screen-view').forEach(view => view.classList.add('hidden'));
+      const activeScreen = document.getElementById(`screen-${screenName}`);
+      if (activeScreen) activeScreen.classList.remove('hidden');
+
+      // Header button toggles
+      const navMapBtn = document.getElementById('nav-map-btn');
+      const navShopBtn = document.getElementById('nav-shop-btn');
+      
+      if (screenName === 'welcome' || screenName === 'map') {
+        navMapBtn.classList.add('hidden');
+      } else {
+        navMapBtn.classList.remove('hidden');
+      }
+
+      if (screenName === 'shop') {
+        navShopBtn.classList.add('hidden');
+      } else {
+        navShopBtn.classList.remove('hidden');
+      }
+
+      // Initialize specific screen behaviors
+      if (screenName === 'map') renderMapScreen();
+      if (screenName === 'game1') initGame1();
+      if (screenName === 'game2') initGame2();
+      if (screenName === 'game3') initGame3();
+      if (screenName === 'game4') initGame4();
+      if (screenName === 'shop') renderShopScreen();
+
+      // Always update coins display
+      document.getElementById('coin-display').textContent = state.coins;
+      lucide.createIcons();
+    }
+
+    function addCoins(amount) {
+      state.coins += amount;
+      document.getElementById('coin-display').textContent = state.coins;
+    }
+
+    // ==================== DECORATIONS / MAP DEFINITIONS ====================
+    const decorationMetadata = {
+      castle: { emoji: "🏰", name: "星光城堡", animationClass: "animate-bounce-slow" },
+      ferris: { emoji: "🎡", name: "摩天輪", animationClass: "animate-spin-slow" },
+      coaster: { emoji: "🎢", name: "極速過山車", animationClass: "animate-bounce" },
+      popcorn: { emoji: "🍿", name: "爆谷機", animationClass: "" },
+      carousel: { emoji: "🎠", name: "旋轉木馬", animationClass: "animate-pulse" },
+      clown: { emoji: "🤡", name: "小丑汽球", animationClass: "animate-bounce-slow" }
+    };
+
+    function renderMapScreen() {
+      const playground = document.getElementById('decorations-playground');
+      playground.innerHTML = '';
+      
+      if (state.decorations.length === 0) {
+        playground.innerHTML = `<p class="text-slate-300 font-bold text-sm bg-black/30 px-4 py-2 rounded-xl">園內空空如也？快去「禮品店」用金幣購買精美裝飾吧！🛍️</p>`;
+      } else {
+        state.decorations.forEach(itemId => {
+          const item = decorationMetadata[itemId];
+          if (item) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `flex flex-col items-center ${item.animationClass}`;
+            wrapper.innerHTML = `
+              <span class="text-5xl filter drop-shadow">${item.emoji}</span>
+              <span class="text-xs font-bold mt-1 bg-black/40 px-2 py-0.5 rounded text-white">${item.name}</span>
+            `;
+            playground.appendChild(wrapper);
+          }
+        });
+      }
+      
+      document.getElementById('decorations-count').textContent = `當前解鎖組件: ${state.decorations.length} / 6`;
+    }
+
+    // ==================== GAME 1: FOUR DIGITS (ROLLERCOASTER) ====================
+    let game1State = {
+      level: 1,
+      type: 'make_number', // make_number, count_pattern, ordering, multiple_choice
+      placedDigits: [null, null, null, null],
+      availableDigits: [],
+      originalDigits: [],
+      correctSequenceAns: null,
+      mcCorrect: null,
+      isCorrect: null
+    };
+
+    const game1Levels = {
+      1: {
+        type: 'make_number',
+        digits: [0, 4, 4, 7],
+        prompt: "請排出：用數卡【0, 4, 4, 7】組成『第二個』四位雙數（由小至大：最小 4074 (單)，雙數依次是 4704, 7044 等，第二個雙數是 4470）。",
+        ans: '4470'
+      },
+      2: {
+        type: 'make_number',
+        digits: [3, 4, 2, 7],
+        prompt: "請排出算柱的值：「千位有3粒，百位有4粒，十位有2粒，個位有7粒」的值。",
+        ans: '3427'
+      },
+      3: {
+        type: 'count_pattern',
+        sequence: [1000, 1250, 1500, null, 2000],
+        options: [1600, 1750, 1800, 1950],
+        ans: 1750,
+        prompt: "依規律填數（每250個一組）：觀察下面的數列，找出問號處應填上甚麼數？"
+      },
+      4: {
+        type: 'ordering',
+        numbers: [6207, 6027, 6072],
+        prompt: "排列大小：請找出【由大至小】排列的正確順序。"
+      },
+      5: {
+        type: 'multiple_choice',
+        options: ["7341", "5086", "8272", "9900"],
+        ans: "7341",
+        prompt: "請問下列哪一個數是「單數」？"
+      },
+      6: {
+        type: 'count_pattern',
+        sequence: [200, 400, 600, null, 1000],
+        options: [700, 800, 900, 850],
+        ans: 800,
+        prompt: "依規律填數（每200個一組）：找出空缺的數字。"
+      },
+      7: {
+        type: 'make_number',
+        digits: [9, 1, 0, 0],
+        prompt: "請排出：用數卡【9, 1, 0, 0】能組成的『最大』四位數。",
+        ans: '9100'
+      },
+      8: {
+        type: 'multiple_choice',
+        options: ["5000", "90", "0", "3"],
+        ans: "0",
+        prompt: "在四位數 5093 中，『百位』數字所表示的數值是多少？"
+      },
+      9: {
+        type: 'count_pattern',
+        sequence: [1000, 1500, 2000, null, 3000],
+        options: [2400, 2500, 2600, 2750],
+        ans: 2500,
+        prompt: "依規律填數（每500個一組）：找出空缺的數字。"
+      },
+      10: {
+        type: 'make_number',
+        digits: [2, 9, 4, 0],
+        prompt: "請根據指令排出數字：「數字『2』在千位，數字『0』在個位，數字『9』在百位，數字『4』在十位」。",
+        ans: '2940'
+      }
+    };
+
+    function initGame1() {
+      game1State.isCorrect = null;
+      document.getElementById('game1-level').textContent = game1State.level;
+      document.getElementById('game1-feedback').classList.add('hidden');
+      
+      // Update Level Dots
+      const dots = document.getElementById('game1-level-dots');
+      dots.innerHTML = '';
+      for (let i = 1; i <= 10; i++) {
+        const dot = document.createElement('div');
+        dot.className = `w-2 h-2 rounded-full ${game1State.level >= i ? 'bg-pink-500' : 'bg-slate-200'}`;
+        dots.appendChild(dot);
+      }
+
+      // Hide all game types
+      document.getElementById('game1-makenumber-area').classList.add('hidden');
+      document.getElementById('game1-sequence-area').classList.add('hidden');
+      document.getElementById('game1-ordering-area').classList.add('hidden');
+      document.getElementById('game1-mc-area').classList.add('hidden');
+
+      const config = game1Levels[game1State.level];
+      document.getElementById('game1-prompt').textContent = `💡 任務：${config.prompt}`;
+
+      if (config.type === 'make_number') {
+        game1State.type = 'make_number';
+        game1State.placedDigits = [null, null, null, null];
+        game1State.originalDigits = [...config.digits];
+        game1State.availableDigits = [...config.digits];
+        
+        document.getElementById('game1-makenumber-area').classList.remove('hidden');
+        renderGame1Digits();
+      } else if (config.type === 'count_pattern') {
+        game1State.type = 'count_pattern';
+        game1State.correctSequenceAns = config.ans;
+        document.getElementById('game1-sequence-area').classList.remove('hidden');
+        
+        // Render sequence slots
+        const seqContainer = document.getElementById('game1-sequence-slots');
+        seqContainer.innerHTML = '';
+        config.sequence.forEach((num, idx) => {
+          const slot = document.createElement('div');
+          slot.className = `w-20 h-16 rounded-2xl flex flex-col items-center justify-center border-2 shadow-sm ${num === null ? 'border-dashed border-pink-400 bg-pink-50 text-pink-600 animate-pulse' : 'border-slate-200 bg-white text-slate-800'}`;
+          slot.innerHTML = `
+            <span class="text-lg font-black">${num !== null ? num : '❓'}</span>
+            <span class="text-[10px] text-slate-400">第 ${idx + 1} 項</span>
+          `;
+          seqContainer.appendChild(slot);
+        });
+
+        // Render options shuffled
+        const optContainer = document.getElementById('game1-sequence-options');
+        optContainer.innerHTML = '';
+        const shuffled = [...config.options].sort(() => Math.random() - 0.5);
+        shuffled.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = "py-3 bg-white hover:bg-pink-100 border-2 border-slate-200 hover:border-pink-300 rounded-2xl text-lg font-black text-slate-700 shadow-sm transition-all";
+          btn.textContent = opt;
+          btn.onclick = () => submitSequenceAnswer(opt);
+          optContainer.appendChild(btn);
+        });
+      } else if (config.type === 'ordering') {
+        game1State.type = 'ordering';
+        document.getElementById('game1-ordering-area').classList.remove('hidden');
+        const numContainer = document.getElementById('game1-ordering-numbers');
+        numContainer.innerHTML = '';
+        config.numbers.forEach(num => {
+          const item = document.createElement('div');
+          item.className = "bg-pink-100 border-2 border-pink-300 text-pink-700 font-black text-xl px-5 py-3 rounded-2xl shadow-sm";
+          item.textContent = num;
+          numContainer.appendChild(item);
+        });
+      } else if (config.type === 'multiple_choice') {
+        game1State.type = 'multiple_choice';
+        game1State.mcCorrect = config.ans;
+        const mcArea = document.getElementById('game1-mc-area');
+        mcArea.classList.remove('hidden');
+        mcArea.innerHTML = '';
+        
+        config.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = "py-4 px-6 bg-white hover:bg-pink-100 border-2 border-slate-200 hover:border-pink-300 rounded-2xl font-black text-slate-700 text-lg shadow-sm transition-all";
+          btn.textContent = opt;
+          btn.onclick = () => submitMCAnswer(opt);
+          mcArea.appendChild(btn);
+        });
+      }
+    }
+
+    // MAKE NUMBER LOGIC
+    function renderGame1Digits() {
+      // Clear slots
+      for (let i = 0; i < 4; i++) {
+        const slot = document.getElementById(`place-${i}`);
+        slot.textContent = game1State.placedDigits[i] !== null ? game1State.placedDigits[i] : "";
+      }
+
+      // Render remaining pool
+      const pool = document.getElementById('game1-digits-pool');
+      pool.innerHTML = '';
+      game1State.availableDigits.forEach((digit, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "w-12 h-12 md:w-14 md:h-14 bg-pink-500 hover:bg-pink-600 text-white font-black text-2xl rounded-xl shadow-md transform hover:scale-105 transition-all flex items-center justify-center";
+        btn.textContent = digit;
+        btn.onclick = () => placeDigit(idx);
+        pool.appendChild(btn);
+      });
+    }
+
+    function placeDigit(digitIndex) {
+      const targetSlot = game1State.placedDigits.indexOf(null);
+      if (targetSlot !== -1) {
+        playSound('click');
+        game1State.placedDigits[targetSlot] = game1State.availableDigits[digitIndex];
+        game1State.availableDigits.splice(digitIndex, 1);
+        renderGame1Digits();
+      }
+    }
+
+    function removeDigit(slotIndex) {
+      const val = game1State.placedDigits[slotIndex];
+      if (val !== null) {
+        playSound('click');
+        game1State.placedDigits[slotIndex] = null;
+        game1State.availableDigits.push(val);
+        renderGame1Digits();
+      }
+    }
+
+    function resetDigits() {
+      playSound('click');
+      game1State.placedDigits = [null, null, null, null];
+      game1State.availableDigits = [...game1State.originalDigits];
+      renderGame1Digits();
+    }
+
+    function checkGame1Answer() {
+      if (game1State.placedDigits.includes(null)) {
+        showGame1Feedback(false, "請先填滿四個數位哦！");
+        return;
+      }
+      const answerStr = game1State.placedDigits.join('');
+      const expected = game1Levels[game1State.level].ans;
+      if (answerStr === expected) {
+        showGame1Feedback(true, "🎉 答對了！你太棒了！加 10 個樂園金幣！");
+      } else {
+        showGame1Feedback(false, "排列不對哦！請仔細再讀一次題目並重新排列！");
+      }
+    }
+
+    // GAME 1 FEEDBACKS
+    function showGame1Feedback(correct, msg) {
+      const fb = document.getElementById('game1-feedback');
+      const fbt = document.getElementById('game1-feedback-text');
+      const btn = document.getElementById('game1-next-btn');
+      
+      fb.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'border-2', 'border-emerald-300', 'bg-rose-100', 'text-red-800', 'border-2', 'border-rose-300');
+      
+      if (correct) {
+        playSound('correct');
+        fb.classList.add('bg-emerald-100', 'text-emerald-800', 'border-2', 'border-emerald-300');
+        btn.classList.remove('hidden');
+        if (game1State.level === 10) {
+          btn.textContent = "完成挑戰，領取獎勵！ 🗺️";
+        } else {
+          btn.textContent = "下一關過山車 🎢";
+        }
+        // Save reward once
+        if (game1State.isCorrect !== true) {
+          addCoins(10);
+        }
+        game1State.isCorrect = true;
+      } else {
+        playSound('wrong');
+        fb.classList.add('bg-rose-100', 'text-red-800', 'border-2', 'border-rose-300');
+        btn.classList.add('hidden');
+        game1State.isCorrect = false;
+      }
+      fbt.textContent = msg;
+    }
+
+    function submitSequenceAnswer(selected) {
+      if (selected === game1State.correctSequenceAns) {
+        showGame1Feedback(true, "🎉 答對了！你太棒了！加 10 個樂園金幣！");
+      } else {
+        showGame1Feedback(false, "規律不對哦，請重新算算看規律的跨度！");
+      }
+    }
+
+    function checkGame1Order(isCorrectChoice) {
+      if (isCorrectChoice) {
+        showGame1Feedback(true, "🎉 答對了！你太棒了！加 10 個樂園金幣！");
+      } else {
+        showGame1Feedback(false, "順序不對哦！比較四位數時，先比千位，再比百位，如此類推。");
+      }
+    }
+
+    function submitMCAnswer(selected) {
+      if (selected === game1State.mcCorrect) {
+        showGame1Feedback(true, "🎉 答對了！你太棒了！加 10 個樂園金幣！");
+      } else {
+        showGame1Feedback(false, "不對哦，再仔細想想！");
+      }
+    }
+
+    function nextGame1Level() {
+      if (game1State.level === 10) {
+        goToScreen('map');
+      } else {
+        game1State.level++;
+        initGame1();
+      }
+    }
+
+
+    // ==================== GAME 2: THREE DIGITS (CAROUSEL) ====================
+    let game2State = {
+      level: 1,
+      isCorrect: null,
+      selectedAns: null
+    };
+
+    const carouselQuestions = [
+      {
+        story: "🎠 旋轉木馬排隊處原本有乘客 125 人。到站時有 45 人下車，又有 34 人上車。請問現在旋轉木馬處共有乘客多少人？",
+        equation: "125 - 45 + 34",
+        answers: [114, 125, 134, 110],
+        correct: 114
+      },
+      {
+        story: "🍿 樂園小食店今天共烘烤了 500 盒爆谷。上午售出了 452 盒，下午再次購入 274 盒。請問店內現有爆谷多少盒？",
+        equation: "500 - 452 + 274",
+        answers: [322, 274, 300, 312],
+        correct: 322
+      },
+      {
+        story: "🎈 奇幻氣球屋有紅氣球 384 個、藍氣球 466 個。請問共有氣球多少個？",
+        equation: "384 + 466",
+        answers: [800, 850, 840, 750],
+        correct: 850
+      },
+      {
+        story: "🎟️ 樂園門票成人售 142 元，長褲紀念品售 230 元。媽媽拿出一張 500 元紙幣付款購買，應找回多少元？",
+        equation: "500 - 142 - 230",
+        answers: [128, 118, 142, 138],
+        correct: 128
+      },
+      {
+        story: "🍪 主題樂園大廚焗了小熊曲奇餅 128 件，售出了 96 件後，還餘下曲奇餅多少件？",
+        equation: "128 - 96",
+        answers: [24, 32, 42, 28],
+        correct: 32
+      },
+      {
+        story: "👩‍👦 表姐在樂園有 145 元，弟弟有 123 元。如果弟弟玩遊戲用去 11 元，這時弟弟比表姐少多少元？",
+        equation: "145 - (123 - 11)",
+        answers: [33, 22, 43, 11],
+        correct: 33
+      },
+      {
+        story: "🛒 媽媽在紀念品店買了一台迷你爆谷機用了 488 元，她的錢包裡還剩下 272 元。請問她原原有幾多元？",
+        equation: "488 + 272",
+        answers: [750, 760, 680, 790],
+        correct: 760
+      },
+      {
+        story: "🤖 紀念品店有玩具車 235 件，玩具熊比玩具車少 153 件。請問這兩種玩具合共共有多少件？",
+        equation: "235 + (235 - 153)",
+        answers: [317, 307, 285, 320],
+        correct: 317
+      },
+      {
+        story: "⚪⚫ 樂園棋藝室有一盒黑白棋共 215 枚，其中黑棋有 108 枚。請問白棋有多少枚？",
+        equation: "215 - 108",
+        answers: [107, 117, 105, 97],
+        correct: 107
+      },
+      {
+        story: "🔵🟢🟡 哥哥在攤位遊戲贏得了 206 粒藍色玻璃彈珠、165 粒綠色彈珠和 128 粒黃色彈珠。請問藍色和綠色彈珠合共的數量，比黃色彈珠多多少粒？",
+        equation: "206 + 165 - 128",
+        answers: [243, 233, 253, 221],
+        correct: 243
+      }
+    ];
+
+    function initGame2() {
+      game2State.isCorrect = null;
+      game2State.selectedAns = null;
+      document.getElementById('game2-level').textContent = game2State.level;
+      document.getElementById('game2-feedback').classList.add('hidden');
+      document.getElementById('game2-formula-tip').classList.add('hidden');
+
+      const dots = document.getElementById('game2-level-dots');
+      dots.innerHTML = '';
+      for (let i = 1; i <= 10; i++) {
+        const dot = document.createElement('div');
+        dot.className = `w-2 h-2 rounded-full ${game2State.level >= i ? 'bg-blue-500' : 'bg-slate-200'}`;
+        dots.appendChild(dot);
+      }
+
+      const q = carouselQuestions[game2State.level - 1];
+      document.getElementById('game2-story').textContent = q.story;
+
+      // Render MCQ
+      const optContainer = document.getElementById('game2-options');
+      optContainer.innerHTML = '';
+      q.answers.forEach(ans => {
+        const btn = document.createElement('button');
+        btn.className = "py-4 px-6 bg-white hover:bg-blue-50 text-slate-700 border-2 border-slate-200 hover:border-blue-300 rounded-2xl text-xl font-black tracking-wider transition-all transform hover:-translate-y-0.5 active:translate-y-0";
+        btn.textContent = `$ ${ans} 元`;
+        btn.onclick = () => submitGame2Answer(ans, btn);
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function submitGame2Answer(selected, buttonElement) {
+      if (game2State.isCorrect === true) return; // Prevent multiple clicks on success
+
+      const q = carouselQuestions[game2State.level - 1];
+      game2State.selectedAns = selected;
+
+      // Reset selection styling
+      document.querySelectorAll('#game2-options button').forEach(btn => {
+        btn.className = "py-4 px-6 bg-white text-slate-700 border-2 border-slate-200 rounded-2xl text-xl font-black tracking-wider transition-all";
+      });
+
+      const fb = document.getElementById('game2-feedback');
+      const fbt = document.getElementById('game2-feedback-text');
+      const btn = document.getElementById('game2-next-btn');
+
+      fb.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'border-2', 'border-emerald-300', 'bg-rose-100', 'text-red-800', 'border-2', 'border-rose-300');
+
+      if (selected === q.correct) {
+        playSound('correct');
+        buttonElement.className = "py-4 px-6 bg-emerald-500 text-white rounded-2xl text-xl font-black tracking-wider shadow-lg transition-all";
+        fb.classList.add('bg-emerald-100', 'text-emerald-800', 'border-2', 'border-emerald-300');
+        fbt.textContent = `🎉 太厲害了！列式為 ${q.equation} = ${q.correct}。答案完全正確！獲得 10 金幣！`;
+        
+        if (game2State.level === 10) {
+          btn.textContent = "完成挑戰，領取獎勵！ 🗺️";
+        } else {
+          btn.textContent = "下一關旋轉木馬 🎠";
+        }
+        
+        if (game2State.isCorrect !== true) addCoins(10);
+        game2State.isCorrect = true;
+      } else {
+        playSound('wrong');
+        buttonElement.className = "py-4 px-6 bg-rose-500 text-white rounded-2xl text-xl font-black tracking-wider shadow-lg transition-all";
+        fb.classList.add('bg-rose-100', 'text-red-800', 'border-2', 'border-rose-300');
+        fbt.textContent = "⚠️ 算式答案不對喔，再用草稿紙仔細計算一下吧！";
+        
+        // Show formula hint
+        document.getElementById('game2-formula-tip').classList.remove('hidden');
+        document.getElementById('game2-tip-text').textContent = `💡 溫馨提示（算式）：${q.equation}`;
+        game2State.isCorrect = false;
+      }
+      fb.classList.remove('hidden');
+    }
+
+    function nextGame2Level() {
+      if (game2State.level === 10) {
+        goToScreen('map');
+      } else {
+        game2State.level++;
+        initGame2();
+      }
+    }
+
+
+    // ==================== GAME 3: LENGTH (FERRIS WHEEL) ====================
+    let game3State = {
+      level: 1,
+      isCorrect: null
+    };
+
+    const lengthTasks = [
+      {
+        story: "📏 樂園的小巴車身長約 7 _______，你認為橫線上填上甚麼長度單位最合適？",
+        options: ['厘米 (cm)', '米 (m)'],
+        correct: '米 (m)',
+        explain: "✅ 答對了！一輛小巴相當大，長度約為 7 米(m)。"
+      },
+      {
+        story: "📏 樂園酒店客房的單人床，它的寬度大約是 90 _______？",
+        options: ['厘米 (cm)', '米 (m)'],
+        correct: '厘米 (cm)',
+        explain: "✅ 答對了！單人床寬度大約 90 厘米(cm)。"
+      },
+      {
+        story: "🚶‍♂️ 永備尺估計：已知志明的一步（永備步長）大約是 30 厘米。他在量度旋轉木馬和城堡的距離時，一共走了 5 步，請問這兩者之間的距離大約是多少？",
+        options: ['150 厘米 (cm)', '15 厘米 (cm)', '150 米 (m)', '35 厘米 (cm)'],
+        correct: '150 厘米 (cm)',
+        explain: "✅ 答對了！ 30 厘米 × 5 步 = 150 厘米。"
+      },
+      {
+        story: "🔄 單位換算：樂園大風扇的高度是 400 厘米(cm)。換算成米（m），它是多少米？",
+        options: ['40 米', '4 米', '400 米', '2 米'],
+        correct: '4 米',
+        explain: "✅ 答對了！因為 100 厘米 = 1 米，所以 400 厘米 = 4 米！"
+      },
+      {
+        story: "📏 測量大冒險：以下哪一種工具最適合用來量度運動場跑道長度？",
+        options: ['滾輪', '手指的闊度', '厘米直尺', '軟尺'],
+        correct: '滾輪',
+        explain: "✅ 答對了！滾輪最方便用來量度長距離（如跑道或道路）。"
+      },
+      {
+        story: "📏 樂園的自動售賣機高度大約是 2 _______？",
+        options: ['厘米 (cm)', '米 (m)'],
+        correct: '米 (m)',
+        explain: "✅ 答對了！售賣機和成年人的高度相近，約 2 米(m)。"
+      },
+      {
+        story: "🔄 單位換算：樂園噴水池直徑是 5 米(m)，換算成厘米是多少厘米(cm)？",
+        options: ['50 厘米', '500 厘米', '5000 厘米', '250 厘米'],
+        correct: '500 厘米',
+        explain: "✅ 答對了！因為 1 米 = 100 厘米，所以 5 米 = 500 厘米！"
+      },
+      {
+        story: "📏 樂園紀念品鉛筆的長度大約是 15 _______？",
+        options: ['厘米 (cm)', '米 (m)'],
+        correct: '厘米 (cm)',
+        explain: "✅ 答對了！一支鉛筆約為 15 厘米(cm)。"
+      },
+      {
+        story: "🤚 永備尺估計：媽媽的一手跨大約是 15 厘米。她量度紀念品店展示櫃的闊度，剛好是 4 手跨。展示櫃的闊度大約是多少？",
+        options: ['60 厘米 (cm)', '6 厘米 (cm)', '60 米 (m)', '150 厘米 (cm)'],
+        correct: '60 厘米 (cm)',
+        explain: "✅ 答對了！ 15 厘米 × 4 手跨 = 60 厘米。"
+      },
+      {
+        story: "📏 香港大嶼山天壇大佛的高度最適合用甚麼單位記錄？",
+        options: ['厘米 (cm)', '米 (m)'],
+        correct: '米 (m)',
+        explain: "✅ 答對了！高大的佛像當然要以米 (m) 為單位量度！"
+      }
+    ];
+
+    function initGame3() {
+      game3State.isCorrect = null;
+      document.getElementById('game3-level').textContent = game3State.level;
+      document.getElementById('game3-feedback').classList.add('hidden');
+
+      const dots = document.getElementById('game3-level-dots');
+      dots.innerHTML = '';
+      for (let i = 1; i <= 10; i++) {
+        const dot = document.createElement('div');
+        dot.className = `w-2 h-2 rounded-full ${game3State.level >= i ? 'bg-purple-500' : 'bg-slate-200'}`;
+        dots.appendChild(dot);
+      }
+
+      const q = lengthTasks[game3State.level - 1];
+      document.getElementById('game3-story').textContent = q.story;
+
+      // Illustration rendering
+      const illus = document.getElementById('game3-illustration');
+      illus.innerHTML = '';
+      if (game3State.level % 2 === 0) {
+        illus.className = "flex flex-col items-center animate-bounce-slow";
+        illus.innerHTML = `<span class="text-7xl">🛏️</span><span class="text-slate-400 text-xs font-bold mt-2">生活常見物件</span>`;
+      } else {
+        illus.className = "flex flex-col items-center animate-pulse";
+        illus.innerHTML = `<span class="text-7xl">📐</span><span class="text-slate-400 text-xs font-bold mt-2">精準度量與估算</span>`;
+      }
+
+      // Render Options
+      const optContainer = document.getElementById('game3-options');
+      optContainer.innerHTML = '';
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = "flex-1 min-w-[140px] py-4 px-6 bg-white hover:bg-purple-50 border-2 border-slate-200 hover:border-purple-300 rounded-2xl text-lg font-black text-slate-700 shadow-sm transition-all text-center animate-fade-in";
+        btn.textContent = opt;
+        btn.onclick = () => submitGame3Answer(opt);
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function submitGame3Answer(selected) {
+      if (game3State.isCorrect === true) return;
+
+      const q = lengthTasks[game3State.level - 1];
+      const fb = document.getElementById('game3-feedback');
+      const fbt = document.getElementById('game3-feedback-text');
+      const btn = document.getElementById('game3-next-btn');
+
+      fb.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'border-2', 'border-emerald-300', 'bg-rose-100', 'text-red-800', 'border-2', 'border-rose-300');
+
+      if (selected === q.correct) {
+        playSound('correct');
+        fb.classList.add('bg-emerald-100', 'text-emerald-800', 'border-2', 'border-emerald-300');
+        fbt.textContent = q.explain + " 獲得 10 金幣！";
+        
+        if (game3State.level === 10) {
+          btn.textContent = "完成挑戰，領取獎勵！ 🗺️";
+        } else {
+          btn.textContent = "下一關摩天輪 🎡";
+        }
+        
+        if (game3State.isCorrect !== true) addCoins(10);
+        game3State.isCorrect = true;
+      } else {
+        playSound('wrong');
+        fb.classList.add('bg-rose-100', 'text-red-800', 'border-2', 'border-rose-300');
+        fbt.textContent = "⚠️ 這個單位或數值不符合實際生活長度，再想一想！";
+        game3State.isCorrect = false;
+      }
+      fb.classList.remove('hidden');
+    }
+
+    function nextGame3Level() {
+      if (game3State.level === 10) {
+        goToScreen('map');
+      } else {
+        game3State.level++;
+        initGame3();
+      }
+    }
+
+
+    // ==================== GAME 4: CURRENCY (SOUVENIR SHOP) ====================
+    let game4State = {
+      level: 1,
+      selectedPaid: [],
+      isCorrect: null
+    };
+
+    const currencyLevels = [
+      {
+        type: 'pay',
+        toyName: "可愛長頸鹿氣球 🦒",
+        toyPrice: 15.50,
+        emoji: "🦒"
+      },
+      {
+        type: 'pay',
+        toyName: "特大歡樂雙層雪糕 🍦",
+        toyPrice: 27.60,
+        emoji: "🍦"
+      },
+      {
+        type: 'swap',
+        prompt: "🔄 貨幣互換：1張【$100】紙幣可以換成多少張【$50】紙幣？",
+        options: ["1張", "2張", "5張", "10張"],
+        correct: "2張",
+        explain: "✅ 答對了！50 + 50 = 100，所以可以換成 2 張 50 元。"
+      },
+      {
+        type: 'swap',
+        prompt: "🔄 貨幣互換：10張【$20】紙幣可以換成多少張【$100】紙幣？",
+        options: ["1張", "2張", "5張", "10張"],
+        correct: "2張",
+        explain: "✅ 答對了！10張 $20 合共 $200 元，可換成 2 張 $100 紙幣。"
+      },
+      {
+        type: 'pay',
+        toyName: "松鼠護眼檯燈 💡",
+        toyPrice: 44.70,
+        emoji: "💡"
+      },
+      {
+        type: 'pay',
+        toyName: "可愛柴犬水杯 🥛",
+        toyPrice: 18.50,
+        emoji: "🥛"
+      },
+      {
+        type: 'swap',
+        prompt: "🔄 貨幣互換：1張【$500】紙幣可以換成多少張【$100】紙幣？",
+        options: ["2張", "5張", "10張", "50張"],
+        correct: "5張",
+        explain: "✅ 答對了！5 張 100 元合共是 500 元。"
+      },
+      {
+        type: 'swap',
+        prompt: "🔄 貨幣互換：2張【$50】紙幣可以換成多少張【$20】紙幣？",
+        options: ["2張", "3張", "5張", "10張"],
+        correct: "5張",
+        explain: "✅ 答對了！2張 50 元是 100 元，可換成 5 張 20 元。"
+      },
+      {
+        type: 'pay',
+        toyName: "爆谷與熱狗雙人套餐 🍿",
+        toyPrice: 38.30,
+        emoji: "🍿"
+      },
+      {
+        type: 'swap',
+        prompt: "🔄 貨幣互換：5個【$2】硬幣可以換成多少個【$10】硬幣？",
+        options: ["1個", "2個", "5個", "10個"],
+        correct: "1個",
+        explain: "✅ 答對了！5個 2 元硬幣是 10 元，剛好能換 1 個 10 元硬幣。"
+      }
+    ];
+
+    function initGame4() {
+      game4State.isCorrect = null;
+      game4State.selectedPaid = [];
+      document.getElementById('game4-level').textContent = game4State.level;
+      document.getElementById('game4-feedback').classList.add('hidden');
+
+      // Dots
+      const dots = document.getElementById('game4-level-dots');
+      dots.innerHTML = '';
+      for (let i = 1; i <= 10; i++) {
+        const dot = document.createElement('div');
+        dot.className = `w-2 h-2 rounded-full ${game4State.level >= i ? 'bg-yellow-400' : 'bg-slate-200'}`;
+        dots.appendChild(dot);
+      }
+
+      const q = currencyLevels[game4State.level - 1];
+      
+      // Hide both areas
+      document.getElementById('game4-pay-area').classList.add('hidden');
+      document.getElementById('game4-swap-area').classList.add('hidden');
+
+      if (q.type === 'pay') {
+        document.getElementById('game4-pay-area').classList.remove('hidden');
+        document.getElementById('game4-pay-emoji').textContent = q.emoji;
+        document.getElementById('game4-pay-name').textContent = q.toyName;
+        document.getElementById('game4-pay-price').textContent = q.toyPrice.toFixed(2);
+        
+        renderHKDSelection();
+      } else {
+        document.getElementById('game4-swap-area').classList.remove('hidden');
+        document.getElementById('game4-swap-prompt').textContent = q.prompt;
+
+        const optContainer = document.getElementById('game4-swap-options');
+        optContainer.innerHTML = '';
+        q.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = "py-4 bg-white hover:bg-yellow-50 border-2 border-slate-200 hover:border-yellow-400 rounded-2xl font-black text-slate-700 text-lg shadow-sm transition-all";
+          btn.textContent = opt;
+          btn.onclick = () => submitGame4Swap(opt);
+          optContainer.appendChild(btn);
+        });
+      }
+    }
+
+    // Interactive Pay mode helpers
+    function payHKD(amount) {
+      playSound('click');
+      game4State.selectedPaid.push(amount);
+      renderHKDSelection();
+    }
+
+    function resetHKDPayment() {
+      playSound('click');
+      game4State.selectedPaid = [];
+      renderHKDSelection();
+    }
+
+    function renderHKDSelection() {
+      const container = document.getElementById('game4-paid-coins');
+      container.innerHTML = '';
+      
+      let sum = 0;
+      game4State.selectedPaid.forEach(val => {
+        sum += val;
+        const pill = document.createElement('span');
+        pill.className = "bg-yellow-400 text-slate-900 font-extrabold text-xs px-2.5 py-1 rounded-full shadow-sm animate-scale-up";
+        pill.textContent = val >= 10 ? `$${val}` : `${val}元`;
+        container.appendChild(pill);
+      });
+
+      if (game4State.selectedPaid.length === 0) {
+        container.innerHTML = `<span class="text-slate-400 font-bold text-sm">空空如也，請點擊下方錢幣付款...</span>`;
+        document.getElementById('game4-pay-submit-btn').setAttribute('disabled', 'true');
+      } else {
+        document.getElementById('game4-pay-submit-btn').removeAttribute('disabled');
+      }
+
+      document.getElementById('game4-total-paid').textContent = sum.toFixed(2);
+    }
+
+    function verifyHKDPayment() {
+      if (game4State.isCorrect === true) return;
+
+      const q = currencyLevels[game4State.level - 1];
+      const paidSum = game4State.selectedPaid.reduce((a, b) => a + b, 0);
+      const price = q.toyPrice;
+
+      const fb = document.getElementById('game4-feedback');
+      const fbt = document.getElementById('game4-feedback-text');
+      const btn = document.getElementById('game4-next-btn');
+
+      fb.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'border-2', 'border-emerald-300', 'bg-rose-100', 'text-red-800', 'border-2', 'border-rose-300');
+
+      if (Math.abs(paidSum - price) < 0.01) {
+        playSound('correct');
+        fb.classList.add('bg-emerald-100', 'text-emerald-800', 'border-2', 'border-emerald-300');
+        fbt.textContent = `🎉 支付金額剛好！你成功購買了『${q.toyName}』！獲得 15 金幣！`;
+        
+        if (game4State.level === 10) {
+          btn.textContent = "完成挑戰，領取獎勵！ 🗺️";
+        } else {
+          btn.textContent = "下一關大冒險 🍿";
+        }
+        
+        if (game4State.isCorrect !== true) addCoins(15);
+        game4State.isCorrect = true;
+      } else if (paidSum > price) {
+        playSound('correct');
+        const change = (paidSum - price).toFixed(1);
+        fb.classList.add('bg-emerald-100', 'text-emerald-800', 'border-2', 'border-emerald-300');
+        fbt.textContent = `🎉 支付成功！付了 $${paidSum} 元，售價是 $${price} 元，店員應找回 $${change} 元。獲得 15 金幣！`;
+        
+        if (game4State.level === 10) {
+          btn.textContent = "完成挑戰，領取獎勵！ 🗺️";
+        } else {
+          btn.textContent = "下一關大冒險 🍿";
+        }
+
+        if (game4State.isCorrect !== true) addCoins(15);
+        game4State.isCorrect = true;
+      } else {
+        playSound('wrong');
+        fb.classList.add('bg-rose-100', 'text-red-800', 'border-2', 'border-rose-300');
+        fbt.textContent = `⚠️ 付款金額不足喔！商品售價是 $${price} 元，你才付了 $${paidSum} 元，再付多一點！`;
+        game4State.isCorrect = false;
+      }
+      fb.classList.remove('hidden');
+    }
+
+    function submitGame4Swap(selected) {
+      if (game4State.isCorrect === true) return;
+
+      const q = currencyLevels[game4State.level - 1];
+      const fb = document.getElementById('game4-feedback');
+      const fbt = document.getElementById('game4-feedback-text');
+      const btn = document.getElementById('game4-next-btn');
+
+      fb.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'border-2', 'border-emerald-300', 'bg-rose-100', 'text-red-800', 'border-2', 'border-rose-300');
+
+      if (selected === q.correct) {
+        playSound('correct');
+        fb.classList.add('bg-emerald-100', 'text-emerald-800', 'border-2', 'border-emerald-300');
+        fbt.textContent = q.explain + " 獲得 15 金幣！";
+        
+        if (game4State.level === 10) {
+          btn.textContent = "完成挑戰，領取獎勵！ 🗺️";
+        } else {
+          btn.textContent = "下一關大冒險 🍿";
+        }
+
+        if (game4State.isCorrect !== true) addCoins(15);
+        game4State.isCorrect = true;
+      } else {
+        playSound('wrong');
+        fb.classList.add('bg-rose-100', 'text-red-800', 'border-2', 'border-rose-300');
+        fbt.textContent = "⚠️ 算一算面值總額，應該不對喔。再想一想！";
+        game4State.isCorrect = false;
+      }
+      fb.classList.remove('hidden');
+    }
+
+    function nextGame4Level() {
+      if (game4State.level === 10) {
+        goToScreen('map');
+      } else {
+        game4State.level++;
+        initGame4();
+      }
+    }
+
+
+    // ==================== GIFT SHOP SCREEN ====================
+    const shopItems = [
+      { id: 'ferris', name: "璀璨大摩天輪", emoji: "🎡", price: 30, desc: "在你的樂園天空中旋轉！" },
+      { id: 'coaster', name: "極速雙軌過山車", emoji: "🎢", price: 50, desc: "超刺激的尖叫新地標！" },
+      { id: 'popcorn', name: "巨型香甜爆谷機", emoji: "🍿", price: 20, desc: "散發出濃郁牛油香氣！" },
+      { id: 'carousel', name: "夢幻皇家木馬", emoji: "🎠", price: 40, desc: "配有歡樂音樂與彩燈！" },
+      { id: 'clown', name: "七彩小丑汽球", emoji: "🤡", price: 15, desc: "給小朋友帶來歡聲笑語！" }
+    ];
+
+    function renderShopScreen() {
+      const container = document.getElementById('shop-items-container');
+      container.innerHTML = '';
+
+      shopItems.forEach(item => {
+        const owned = state.decorations.includes(item.id);
+        const canAfford = state.coins >= item.price;
+        
+        const card = document.createElement('div');
+        card.className = `border-2 rounded-2xl p-4 flex flex-col justify-between transition-all ${owned ? 'border-emerald-200 bg-emerald-50/50' : 'border-slate-100 bg-white hover:border-pink-200'}`;
+        
+        let actionBtnHTML = '';
+        if (owned) {
+          actionBtnHTML = `
+            <button disabled class="w-full py-2 bg-emerald-100 text-emerald-700 font-black rounded-xl text-xs flex items-center justify-center gap-1">
+              <i data-lucide="check" class="w-4 h-4"></i> 園內已裝飾
+            </button>
+          `;
+        } else {
+          if (canAfford) {
+            actionBtnHTML = `
+              <button onclick="buyShopItem('${item.id}', ${item.price})" class="w-full py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-pink-500 to-indigo-600 hover:from-pink-600 hover:to-indigo-700 text-white shadow-md transition-all">
+                立即購買 🛒
+              </button>
+            `;
+          } else {
+            actionBtnHTML = `
+              <button disabled class="w-full py-2.5 rounded-xl text-xs font-black bg-slate-100 text-slate-400 cursor-not-allowed">
+                不夠金幣 😢
+              </button>
+            `;
+          }
+        }
+
+        card.innerHTML = `
+          <div class="text-center py-4">
+            <span class="text-6xl inline-block ${owned ? 'animate-pulse' : ''}">${item.emoji}</span>
+            <h4 class="text-lg font-black text-slate-800 mt-2">${item.name}</h4>
+            <p class="text-xs font-bold text-slate-400 mt-1">${item.desc}</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-dashed border-slate-100">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-xs font-bold text-slate-400">價格：</span>
+              <span class="font-extrabold text-yellow-600 text-base">${item.price} 金幣</span>
+            </div>
+            ${actionBtnHTML}
+          </div>
+        `;
+        
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function buyShopItem(itemId, price) {
+      if (state.coins >= price && !state.decorations.includes(itemId)) {
+        playSound('success');
+        state.coins -= price;
+        state.decorations.push(itemId);
+        
+        // Refresh layout
+        document.getElementById('coin-display').textContent = state.coins;
+        renderShopScreen();
+      }
+    }
+
+
+    // ==================== APP INITIALIZATION ====================
+    window.addEventListener('DOMContentLoaded', () => {
+      // Setup icons
+      lucide.createIcons();
+      // Start at welcome screen
+      goToScreen('welcome');
+    });
+  </script>
+</body>
+</html>
